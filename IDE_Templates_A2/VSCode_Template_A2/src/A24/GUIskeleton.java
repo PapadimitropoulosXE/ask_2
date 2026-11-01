@@ -1,23 +1,31 @@
 package A24;
 
+import java.awt.Desktop;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-class GUIskeleton extends JFrame implements ActionListener {
+public class GUIskeleton extends JFrame implements ActionListener {
+    private ArrayList<File> imageFiles;
 
-    GUIskeleton() {
-        setTitle("252-2026: A24");
-        setBounds(200, 100, 800, 600); // x, y, width, height
-        setLayout(new GridLayout(0, 4)); // rows, columns
-        String[] data = {"1", "2", "3", "4", "5", "6", "7", "8"};
-        for (String s : data) {
-            JButton btext = new JButton(s);
+    public GUIskeleton(ArrayList<File> imageFiles) {
+        this.imageFiles = imageFiles;
+        setTitle("252-2022: A4");
+        setSize(800, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new GridLayout(0, 4));
+
+        for (File imgFile : imageFiles) {
+            JButton btext = new JButton(imgFile.getName());
             btext.addActionListener(this);
             add(btext);
         }
+
         setVisible(true);
     }
 
@@ -26,12 +34,18 @@ class GUIskeleton extends JFrame implements ActionListener {
         Object so = e.getSource();
         if (so instanceof JButton) {
             JButton sj = (JButton) so;
-            String sjt = sj.getText();
-            System.out.println(sjt);
+            String fileName = sj.getText();
+            for (File f : imageFiles) {
+                if (f.getName().equals(fileName)) {
+                    try {
+                        Desktop dt = Desktop.getDesktop();
+                        dt.open(f);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    break;
+                }
+            }
         }
-    }
-
-    public static void main(String[] args) {
-        GUIskeleton g = new GUIskeleton();
     }
 }

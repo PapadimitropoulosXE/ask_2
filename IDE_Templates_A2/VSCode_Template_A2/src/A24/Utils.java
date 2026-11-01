@@ -3,17 +3,11 @@ package A24;
 import java.io.File;
 import javax.swing.JFileChooser;
 
-class Utils {
-
-    /**
-     * Dialog for selecting a folder
-     * mode: JFileChooser.DIRECTORIES_ONLY,
-     * @return
-     */
+public class Utils {
     public static String selectAFolderDialog(int mode) {
         String filePath = "";
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileSelectionMode(mode); // JFileChooser.DIRECTORIES_ONLY
+        fileChooser.setFileSelectionMode(mode);
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
         int result = fileChooser.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
